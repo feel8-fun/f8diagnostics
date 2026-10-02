@@ -1,0 +1,6 @@
+{
+  "pythonVersion": "3.10",
+  "typeCheckingMode": "strict",
+  "include": ["f8diagnostics"],
+  "reportMissingTypeStubs": "none"
+}

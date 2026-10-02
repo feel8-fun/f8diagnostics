@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "f8extensionCatalog/1",
+  "extensions": [
+    {
+      "extensionId": "diagnostics",
+      "name": "Diagnostics",
+      "version": "0.2.0",
+      "description": "Optional debugging tools for streams, protocols, and runtime integrations.",
+      "runtime": {
+        "kind": "workspace",
+        "environment": "web-studio-runtime"
+      },
+      "tools": [
+        {
+          "toolId": "skeleton-verify",
+          "name": "Verify skeleton UDP stream",
+          "description": "Listen for complete decoded skeleton frames; report malformed packets and incomplete chunks.",
+          "command": "python",
+          "args": [
+            "-m",
+            "f8diagnostics.verify"
+          ],
+          "timeoutSeconds": 35,
+          "requiresConfirmation": false,
+          "fields": [
+            {
+              "name": "bindAddress",
+              "label": "Listen address",
+              "kind": "string",
+              "default": "127.0.0.1",
+              "required": true
+            },
+            {
+              "name": "port",
+              "label": "Listen port",
+              "kind": "integer",
+              "default": 39540,
+              "required": true
+            },
+            {
+              "name": "timeoutMs",
+              "label": "Listen timeout (ms)",
+              "kind": "integer",
+              "default": 2000,
+              "required": true
+            },
+            {
+              "name": "minimumFrames",
+              "label": "Minimum complete frames",
+              "kind": "integer",
+              "default": 1,
+              "required": true
+            }
+          ],
+          "allowConcurrent": true
+        },
+        {
+          "toolId": "skeleton-simulate",
+          "name": "Send simulated skeleton stream",
+          "description": "Continuously send a two-bone animated JSON skeleton stream until stopped. Verify the stream or inspect a graph while it runs.",
+          "command": "python",
+          "args": [
+            "-m",
+            "f8diagnostics.simulate"
+          ],
+          "timeoutSeconds": null,
+          "requiresConfirmation": true,
+          "fields": [
+            {
+              "name": "destination",
+              "label": "Destination address",
+              "kind": "string",
+              "default": "127.0.0.1",
+              "required": true
+            },
+            {
+              "name": "port",
+              "label": "Destination port",
+              "kind": "integer",
+              "default": 39540,
+              "required": true
+            },
+            {
+              "name": "durationSeconds",
+              "label": "Duration (seconds; blank = until stopped)",
+              "kind": "number",
+              "default": null,
+              "required": false
+            },
+            {
+              "name": "fps",
+              "label": "Frames per second (max 120)",
+              "kind": "integer",
+              "default": 30,
+              "required": true
+            },
+            {
+              "name": "modelName",
+              "label": "Model name",
+              "kind": "string",
+              "default": "F8 diagnostic skeleton",
+              "required": true
+            }
+          ],
+          "allowConcurrent": true
+        }
+      ]
+    }
+  ]
+}
