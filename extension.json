@@ -8,7 +8,7 @@
       "description": "Optional debugging tools for streams, protocols, and runtime integrations.",
       "runtime": {
         "kind": "workspace",
-        "environment": "web-studio-runtime"
+        "environment": "diagnostics"
       },
       "tools": [
         {

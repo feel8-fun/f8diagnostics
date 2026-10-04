@@ -20,3 +20,6 @@ test = "python -m pytest tests -q"
 check = "python -m f8pysdk.extension_packaging --check"
 wheel = "python -m pip wheel --no-deps --no-build-isolation -w build/wheels ."
 bundle = { cmd = "python -m f8pysdk.extension_packaging --wheel-dir build/wheels --output build/extension.zip", depends-on = ["wheel", "check"] }
+
+[environments]
+diagnostics = []
