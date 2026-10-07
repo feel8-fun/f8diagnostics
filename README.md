@@ -13,17 +13,20 @@ Simulation and verification allow concurrent execution. Start the simulator, swi
 
 ## Development
 
-The extension follows the generic `f8toolInput/1` stdin and `f8toolResult/1` stdout protocol. Exceptions and tracebacks go to stderr. The source manifest declares the official `web-studio-runtime` environment; the superbuild installs this Python package in that workspace environment.
+The extension follows the generic `f8toolInput/1` stdin and `f8toolResult/1` stdout protocol. Exceptions and tracebacks go to stderr. The source manifest declares its own `diagnostics` workspace environment, which Platform prepares from this package's Pixi manifest and lock.
 
 For independent development:
 
 ```sh
 git clone https://github.com/feel8-fun/f8sdk.git .sdk
-git -C .sdk checkout 5bdb86235cdb889712507428fd48395f2384c210
-pixi run check
-pixi run test
-pixi run basedpyright -p pyrightconfig.json
-pixi run bundle
+git -C .sdk checkout 16ba9e68434d0a0ed419a1a691c924c2e12590a8
+pixi install --locked -e diagnostics
+pixi run --locked -e diagnostics check
+pixi run --locked -e diagnostics test
+pixi run --locked -e diagnostics basedpyright -p pyrightconfig.json
+pixi run --locked -e diagnostics bundle
 ```
 
-The pinned SDK revision is also used by CI on Linux and Windows. `pixi run bundle` creates `build/extension.zip` and its SHA-256 file for the shared-runtime installer. The source manifest declares a workspace runtime; the publisher rewrites it to the generic shared runtime in the ZIP. The Studio integration tests, including persistent send/verify concurrency and stopping, remain in the Studio repository.
+The pinned SDK revision matches CI on Linux and Windows and the committed lock file. Keep `.sdk` as that Git checkout; copying a newer SDK can change local package dependency metadata and make locked installation fail. Back up an existing incorrect input before replacing it, then retry Prepare in Platform after installation succeeds.
+
+`pixi run --locked -e diagnostics bundle` creates `build/extension.zip` and its SHA-256 file for the shared-runtime installer. The source manifest declares a workspace runtime; the publisher rewrites it to the generic shared runtime in the ZIP. The Studio integration tests, including persistent send/verify concurrency and stopping, remain in the Studio repository.
