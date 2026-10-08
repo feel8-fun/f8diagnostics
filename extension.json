@@ -64,7 +64,7 @@
             "f8diagnostics.simulate"
           ],
           "timeoutSeconds": null,
-          "requiresConfirmation": true,
+          "requiresConfirmation": false,
           "fields": [
             {
               "name": "destination",

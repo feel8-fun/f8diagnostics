@@ -84,7 +84,7 @@ def test_optional_tool_only_manifest() -> None:
     extension = catalog.extensions[0]
     assert not catalog.preinstalled and not extension.service_classes
     assert {tool.tool_id for tool in extension.tools} == {'skeleton-verify', 'skeleton-simulate'}
-    assert extension.tools[1].requires_confirmation
+    assert all(not tool.requires_confirmation for tool in extension.tools)
     assert extension.tools[1].timeout_seconds is None
     assert all(tool.allow_concurrent for tool in extension.tools)
     assert SimulateInput().durationSeconds is None
